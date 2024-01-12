@@ -7,6 +7,7 @@ console.log(`SERVER IS ACTIVE ON PORT: ${PORT_NUMBER}`);
 const serverSocket = new WebSocketServer({ port: PORT_NUMBER });
 serverSocket.on("connection", (socket) => {
   console.log(`Client is now connected to the server on PORT:${PORT_NUMBER}!`);
+  socket.send("connected");
 
   socket.on("message", (message) => {
     console.log(

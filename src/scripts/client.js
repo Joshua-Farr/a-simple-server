@@ -13,9 +13,17 @@ const sampleMessageJSON = {
 
 // Once the webSocket is live, the message is sent
 myWebSocket.onopen = (event) => {
-  myWebSocket.send("Here's some text that the server is urgently awaiting!");
+  myWebSocket.send("Client is now connected");
   console.log("Message Sent!");
 };
+
+myWebSocket.on("message", (message) => {
+  if (message === "connected") {
+    console.log(`YOU HAVE SUCCESSFULLY CONNECTED TO THE SERVER ON PORT 3000`);
+  } else {
+    console.log(`Message from the server: ${message}`);
+  }
+});
 
 export const sendMessageToServer = (sender, recipient, message) => {
   const messageJSON = {
