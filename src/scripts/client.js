@@ -1,6 +1,9 @@
 import { WebSocket } from "ws";
+import dotenv from "dotenv";
 
-const PORT_NUMBER = 3000;
+dotenv.config();
+
+const PORT_NUMBER = process.env.SERVER_PORT_NUMBER || 3001;
 
 // Establishing a new WebSocket
 const myWebSocket = new WebSocket(`ws://localhost:${PORT_NUMBER}`);
@@ -21,22 +24,24 @@ myWebSocket.onopen = (event) => {
 };
 
 myWebSocket.on("message", (message) => {
-  console.log("HERE IS THE RESULT: ", message === "connected", typeof message);
-  if (message === {"connected"}) {
-    console.log(`YOU HAVE SUCCESSFULLY CONNECTED TO THE SERVER ON PORT 3000`);
+  message = message.toString("utf8");
+  if (message === "connected") {
+    // Waiting to hear back from the server once connected!
+    console.log(`Successful connection to server on PORT:${PORT}`);
   } else {
     console.log(`Message from the server: ${message}`);
   }
 });
 
+// Setting up functionality to send messages to the server
 export const sendMessageToServer = (sender, recipient, message) => {
   const messageJSON = {
     sender: sender,
     recipient: recipient,
     message: message,
-    timestamp: new Date().getTime(), // Timestamp of when the message was sent
+    timestamp: new Date().toISOString(), // Timestamp of when the message was sent
   };
 
   myWebSocket.send(JSON.stringify(messageJSON));
-  console.log(`Sent message to server: ${messageJSON}`);
+  console.log(`Message sent to server: ${messageJSON}`);
 };
