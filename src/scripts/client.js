@@ -14,6 +14,7 @@ const sampleMessageJSON = {
 // Once the webSocket is live, the message is sent
 myWebSocket.onopen = (event) => {
   myWebSocket.send("Client is now connected");
+  sendMessageToServer("Josh", "Joe Mama", "Hello there!");
   console.log("Message Sent!");
 };
 
