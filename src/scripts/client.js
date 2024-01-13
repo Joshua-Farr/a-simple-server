@@ -1,7 +1,9 @@
 import { WebSocket } from "ws";
 
+const PORT_NUMBER = 3000;
+
 // Establishing a new WebSocket
-const myWebSocket = new WebSocket("ws://localhost:3000");
+const myWebSocket = new WebSocket(`ws://localhost:${PORT_NUMBER}`);
 
 const sampleMessageJSON = {
   id: 1,
@@ -19,7 +21,8 @@ myWebSocket.onopen = (event) => {
 };
 
 myWebSocket.on("message", (message) => {
-  if (message === "connected") {
+  console.log("HERE IS THE RESULT: ", message === "connected", typeof message);
+  if (message === {"connected"}) {
     console.log(`YOU HAVE SUCCESSFULLY CONNECTED TO THE SERVER ON PORT 3000`);
   } else {
     console.log(`Message from the server: ${message}`);
